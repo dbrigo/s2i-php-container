@@ -44,8 +44,11 @@ config_general() {
   if [ -d "/run/php-fpm" ]; then
     sed -i -E "/php_value\[session.save_path\]/d" ${PHP_FPM_CONF_D_PATH}/${PHP_FPM_CONF_FILE}
     sed -e '/catch_workers_output/d' -e '/error_log/d' -i ${PHP_FPM_CONF_D_PATH}/${PHP_FPM_CONF_FILE}
-    sed -e 's/^(clear_env)\s+.*/clear_env = no/' -i ${PHP_FPM_CONF_D_PATH}/${PHP_FPM_CONF_FILE}
-  else
+    if [ "${PHP_CLEAR_ENV:-false}" == "true" ]; then
+      sed -e 's/^(clear_env)\s+.*/clear_env = yes/' -i ${PHP_FPM_CONF_D_PATH}/${PHP_FPM_CONF_FILE}
+    else
+      sed -e 's/^(clear_env)\s+.*/clear_env = no/' -i ${PHP_FPM_CONF_D_PATH}/${PHP_FPM_CONF_FILE}
+    fi  else
     sed -i '/php_value session.save_/d' ${HTTPD_MAIN_CONF_D_PATH}/${PHP_HTTPD_CONF_FILE}
   fi
   head -n${HTTPCONF_LINENO} ${HTTPD_MAIN_CONF_PATH}/httpd.conf | tail -n1 | grep "AllowOverride All" || exit 1
