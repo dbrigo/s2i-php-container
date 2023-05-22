@@ -222,6 +222,10 @@ You can also override the entire directory used to load the PHP configuration by
 * **PHP_INI_SCAN_DIR**
   * Path to scan for additional ini configuration files
 
+You can also override PHP configuration for FPM workers:
+* **PHP_CLEAR_ENV**
+  * Sets to clear environment in FPM workers. See [FPM_CONFIGURATION](https://www.php.net/manual/en/install.fpm.configuration.php).
+
 You can override the Apache [MPM prefork](https://httpd.apache.org/docs/2.4/mod/mpm_common.html)
 settings to increase the performance for of the PHP application. In case you set
 some Cgroup limits, the image will attempt to automatically set the

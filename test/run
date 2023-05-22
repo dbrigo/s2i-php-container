@@ -168,6 +168,7 @@ test_clear_env_setup() {
   info "Checking if clear_env = yes is set in /etc/php-fpm.d/www.conf file."
   docker run --rm "${IMAGE_NAME}-testapp" /bin/bash -c "${run_cmd}"
 }
+
 test_clear_env() {
   CLEAR_ENV=true test_application
 }
